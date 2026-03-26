@@ -3,6 +3,7 @@
 **Move all your windows to one display.** A fast, lightweight Windows CLI utility for multi-monitor setups.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Landing Page](https://img.shields.io/badge/Web-kafkade.github.io%2Fherd-6ee7b7)](https://kafkade.github.io/herd)
 
 ## Why Herd?
 
