@@ -1,93 +1,89 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Proposal 8: Pixel Art Sheep
+       Retro pixel/grid aesthetic matching the terminal/CLI vibe.
+       Built from small rectangles on a grid. -->
+  <rect width="512" height="512" rx="64" fill="#0a0e17"/>
+
+  <!-- Grid dots background (subtle) -->
   <defs>
-    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#e8e0d8;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#c9bfb3;stop-opacity:1" />
-    </linearGradient>
-    <linearGradient id="woolGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#f5f0eb;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#e0d8ce;stop-opacity:1" />
-    </linearGradient>
-    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#6ee7b7;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#34d399;stop-opacity:1" />
-    </linearGradient>
-    <!-- Terminal glow effect -->
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-      <feMerge>
-        <feMergeNode in="coloredBlur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-    <filter id="softShadow">
-      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.3"/>
-    </filter>
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="12" cy="12" r="0.8" fill="#1e293b"/>
+    </pattern>
   </defs>
+  <rect width="512" height="512" rx="64" fill="url(#grid)"/>
 
-  <!-- Background circle -->
-  <circle cx="256" cy="256" r="240" fill="#1a1b2e" stroke="#2d2f45" stroke-width="4"/>
+  <!-- Pixel sheep — 24px grid blocks -->
+  <!-- Wool row 1 (top) -->
+  <rect x="192" y="120" width="24" height="24" rx="2" fill="#f0ebe5"/>
+  <rect x="216" y="120" width="24" height="24" rx="2" fill="#f5f0eb"/>
+  <rect x="240" y="120" width="24" height="24" rx="2" fill="#f0ebe5"/>
+  <rect x="264" y="120" width="24" height="24" rx="2" fill="#f5f0eb"/>
+  <rect x="288" y="120" width="24" height="24" rx="2" fill="#f0ebe5"/>
 
-  <!-- Terminal window frame -->
-  <rect x="80" y="100" width="352" height="240" rx="12" ry="12" fill="#0d1117" stroke="#30363d" stroke-width="2" filter="url(#softShadow)"/>
-  <!-- Title bar -->
-  <rect x="80" y="100" width="352" height="32" rx="12" ry="12" fill="#161b22"/>
-  <rect x="80" y="120" width="352" height="12" fill="#161b22"/>
-  <!-- Traffic lights -->
-  <circle cx="104" cy="116" r="6" fill="#f85149"/>
-  <circle cx="124" cy="116" r="6" fill="#f0b840"/>
-  <circle cx="144" cy="116" r="6" fill="#3fb950"/>
+  <!-- Wool row 2 -->
+  <rect x="168" y="144" width="24" height="24" rx="2" fill="#f5f0eb"/>
+  <rect x="192" y="144" width="24" height="24" rx="2" fill="#faf7f4"/>
+  <rect x="216" y="144" width="24" height="24" rx="2" fill="#f5f0eb"/>
+  <rect x="240" y="144" width="24" height="24" rx="2" fill="#faf7f4"/>
+  <rect x="264" y="144" width="24" height="24" rx="2" fill="#f5f0eb"/>
+  <rect x="288" y="144" width="24" height="24" rx="2" fill="#faf7f4"/>
+  <rect x="312" y="144" width="24" height="24" rx="2" fill="#f0ebe5"/>
 
-  <!-- Terminal content: "herd" command -->
-  <text x="100" y="162" font-family="'Consolas','Monaco','Courier New',monospace" font-size="15" fill="#8b949e">$</text>
-  <text x="116" y="162" font-family="'Consolas','Monaco','Courier New',monospace" font-size="15" fill="url(#accentGrad)" filter="url(#glow)" font-weight="bold">herd</text>
+  <!-- Wool row 3 + head -->
+  <rect x="120" y="168" width="24" height="24" rx="2" fill="#2d2f3d"/> <!-- ear -->
+  <rect x="144" y="168" width="24" height="24" rx="2" fill="#2d2f3d"/> <!-- head -->
+  <rect x="168" y="168" width="24" height="24" rx="2" fill="#2d2f3d"/> <!-- head -->
+  <rect x="192" y="168" width="24" height="24" rx="2" fill="#ede7e0"/>
+  <rect x="216" y="168" width="24" height="24" rx="2" fill="#f0ebe5"/>
+  <rect x="240" y="168" width="24" height="24" rx="2" fill="#ede7e0"/>
+  <rect x="264" y="168" width="24" height="24" rx="2" fill="#f0ebe5"/>
+  <rect x="288" y="168" width="24" height="24" rx="2" fill="#ede7e0"/>
+  <rect x="312" y="168" width="24" height="24" rx="2" fill="#f5f0eb"/>
+  <rect x="336" y="168" width="24" height="24" rx="2" fill="#f0ebe5"/>
 
-  <!-- Terminal output lines -->
-  <text x="100" y="184" font-family="'Consolas','Monaco','Courier New',monospace" font-size="12" fill="#6ee7b7">✓</text>
-  <text x="118" y="184" font-family="'Consolas','Monaco','Courier New',monospace" font-size="12" fill="#c9d1d9">Found 3 displays</text>
-  <text x="100" y="204" font-family="'Consolas','Monaco','Courier New',monospace" font-size="12" fill="#6ee7b7">✓</text>
-  <text x="118" y="204" font-family="'Consolas','Monaco','Courier New',monospace" font-size="12" fill="#c9d1d9">Moving 8 windows → Display 1</text>
-  <text x="100" y="224" font-family="'Consolas','Monaco','Courier New',monospace" font-size="12" fill="#6ee7b7">✓</text>
-  <text x="118" y="224" font-family="'Consolas','Monaco','Courier New',monospace" font-size="12" fill="#c9d1d9">Snapshot saved</text>
-  <text x="100" y="252" font-family="'Consolas','Monaco','Courier New',monospace" font-size="13" fill="#3fb950" font-weight="bold">Done!</text>
-  <text x="142" y="252" font-family="'Consolas','Monaco','Courier New',monospace" font-size="13" fill="#8b949e">All windows herded 🐑</text>
+  <!-- Face row with eyes -->
+  <rect x="144" y="192" width="24" height="24" rx="2" fill="#2d2f3d"/>
+  <rect x="168" y="192" width="24" height="24" rx="2" fill="#2d2f3d"/>
+  <rect x="192" y="192" width="24" height="24" rx="2" fill="#f5f0eb"/>
+  <rect x="216" y="192" width="24" height="24" rx="2" fill="#faf7f4"/>
+  <rect x="240" y="192" width="24" height="24" rx="2" fill="#f5f0eb"/>
+  <rect x="264" y="192" width="24" height="24" rx="2" fill="#faf7f4"/>
+  <rect x="288" y="192" width="24" height="24" rx="2" fill="#f5f0eb"/>
+  <rect x="312" y="192" width="24" height="24" rx="2" fill="#faf7f4"/>
+  <rect x="336" y="192" width="24" height="24" rx="2" fill="#ede7e0"/>
+  <!-- Eyes on face -->
+  <rect x="148" y="196" width="8" height="8" rx="1" fill="#f0ebe5"/>
+  <rect x="166" y="196" width="8" height="8" rx="1" fill="#f0ebe5"/>
+  <rect x="150" y="198" width="4" height="4" fill="#0a0e17"/>
+  <rect x="168" y="198" width="4" height="4" fill="#0a0e17"/>
 
-  <!-- Cursor blink line -->
-  <rect x="100" y="268" width="8" height="16" fill="#6ee7b7" opacity="0.8">
-    <animate attributeName="opacity" values="0.8;0;0.8" dur="1.2s" repeatCount="indefinite"/>
-  </rect>
+  <!-- Body rows -->
+  <rect x="144" y="216" width="24" height="24" rx="2" fill="#2d2f3d"/> <!-- nose -->
+  <rect x="168" y="216" width="24" height="24" rx="2" fill="#ede7e0"/>
+  <rect x="192" y="216" width="24" height="24" rx="2" fill="#f0ebe5"/>
+  <rect x="216" y="216" width="24" height="24" rx="2" fill="#ede7e0"/>
+  <rect x="240" y="216" width="24" height="24" rx="2" fill="#f0ebe5"/>
+  <rect x="264" y="216" width="24" height="24" rx="2" fill="#ede7e0"/>
+  <rect x="288" y="216" width="24" height="24" rx="2" fill="#f0ebe5"/>
+  <rect x="312" y="216" width="24" height="24" rx="2" fill="#ede7e0"/>
 
-  <!-- Stylized sheep silhouette at bottom -->
-  <!-- Body (wool) -->
-  <ellipse cx="256" cy="410" rx="70" ry="45" fill="url(#woolGrad)" filter="url(#softShadow)"/>
-  <!-- Wool puffs -->
-  <circle cx="220" cy="390" r="22" fill="url(#woolGrad)"/>
-  <circle cx="250" cy="378" r="24" fill="url(#woolGrad)"/>
-  <circle cx="282" cy="382" r="22" fill="url(#woolGrad)"/>
-  <circle cx="300" cy="398" r="20" fill="url(#woolGrad)"/>
-  <circle cx="212" cy="408" r="18" fill="url(#woolGrad)"/>
-  <circle cx="298" cy="416" r="16" fill="url(#woolGrad)"/>
-  <!-- Head -->
-  <ellipse cx="195" cy="395" rx="20" ry="22" fill="#3d3d3d"/>
-  <!-- Ears -->
-  <ellipse cx="180" cy="380" rx="10" ry="6" fill="#4a4a4a" transform="rotate(-25,180,380)"/>
-  <ellipse cx="210" cy="378" rx="10" ry="6" fill="#4a4a4a" transform="rotate(15,210,378)"/>
-  <!-- Eyes -->
-  <circle cx="190" cy="390" r="3.5" fill="#fff"/>
-  <circle cx="190" cy="390" r="2" fill="#1a1b2e"/>
-  <circle cx="202" cy="392" r="3.5" fill="#fff"/>
-  <circle cx="202" cy="392" r="2" fill="#1a1b2e"/>
+  <rect x="168" y="240" width="24" height="24" rx="2" fill="#f5f0eb"/>
+  <rect x="192" y="240" width="24" height="24" rx="2" fill="#ede7e0"/>
+  <rect x="216" y="240" width="24" height="24" rx="2" fill="#f5f0eb"/>
+  <rect x="240" y="240" width="24" height="24" rx="2" fill="#ede7e0"/>
+  <rect x="264" y="240" width="24" height="24" rx="2" fill="#f5f0eb"/>
+  <rect x="288" y="240" width="24" height="24" rx="2" fill="#ede7e0"/>
+  <rect x="312" y="240" width="24" height="24" rx="2" fill="#f5f0eb"/>
+
   <!-- Legs -->
-  <rect x="232" y="440" width="6" height="28" rx="3" fill="#3d3d3d"/>
-  <rect x="250" y="442" width="6" height="26" rx="3" fill="#3d3d3d"/>
-  <rect x="270" y="442" width="6" height="26" rx="3" fill="#3d3d3d"/>
-  <rect x="288" y="440" width="6" height="28" rx="3" fill="#3d3d3d"/>
+  <rect x="180" y="264" width="24" height="28" rx="2" fill="#2d2f3d"/>
+  <rect x="220" y="264" width="24" height="28" rx="2" fill="#2d2f3d"/>
+  <rect x="268" y="264" width="24" height="28" rx="2" fill="#2d2f3d"/>
+  <rect x="308" y="264" width="24" height="28" rx="2" fill="#2d2f3d"/>
 
-  <!-- Green accent arrow (windows moving) -->
-  <path d="M340 390 L370 410 L340 430" stroke="#6ee7b7" stroke-width="3" fill="none" opacity="0.6" stroke-linecap="round" stroke-linejoin="round">
-    <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" repeatCount="indefinite"/>
-  </path>
-  <path d="M355 390 L385 410 L355 430" stroke="#6ee7b7" stroke-width="3" fill="none" opacity="0.4" stroke-linecap="round" stroke-linejoin="round">
-    <animate attributeName="opacity" values="0.1;0.6;0.1" dur="2s" repeatCount="indefinite" begin="0.3s"/>
-  </path>
+  <!-- "herd" text below in pixel-style -->
+  <text x="256" y="360" font-family="Consolas,Monaco,monospace" font-size="48" font-weight="bold" fill="#6ee7b7" text-anchor="middle" letter-spacing="8">herd</text>
+
+  <!-- Green accent underline -->
+  <rect x="156" y="375" width="200" height="3" rx="1.5" fill="#6ee7b7" opacity="0.4"/>
 </svg>
