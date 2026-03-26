@@ -7,27 +7,27 @@ Herd is a Windows CLI utility that moves all visible windows to a single display
 ## System Architecture
 
 ```
-┌─────────────────────────────────────────────────┐
+┌───────────────────────────────────────────────────┐
 │                    CLI Layer                      │
 │  main.rs → clap parsing → command dispatch        │
-├─────────────────────────────────────────────────┤
+├───────────────────────────────────────────────────┤
 │                 Orchestration                     │
 │  herd.rs → coordinates monitors + windows         │
-├──────────────────┬──────────────────────────────┤
-│   Monitor Layer  │      Window Layer             │
-│  monitor.rs      │  window.rs                    │
-│  - enumerate     │  - enumerate                  │
-│  - get info      │  - filter (visible, not       │
-│  - find primary  │    minimized, not system)     │
-│  - find by index │  - move / set position        │
-├──────────────────┴──────────────────────────────┤
+├──────────────────┬────────────────────────────────┤
+│   Monitor Layer  │      Window Layer              │
+│  monitor.rs      │  window.rs                     │
+│  - enumerate     │  - enumerate                   │
+│  - get info      │  - filter (visible, not        │
+│  - find primary  │    minimized, not system)      │
+│  - find by index │  - move / set position         │
+├──────────────────┴────────────────────────────────┤
 │                 Snapshot Layer                    │
 │  snapshot.rs → save/restore positions to JSON     │
-├─────────────────────────────────────────────────┤
+├───────────────────────────────────────────────────┤
 │              Win32 API (windows crate)            │
 │  EnumDisplayMonitors, EnumWindows, SetWindowPos   │
 │  GetMonitorInfoW, DwmGetWindowAttribute, etc.     │
-└─────────────────────────────────────────────────┘
+└───────────────────────────────────────────────────┘
 ```
 
 ## Data Flow
@@ -60,7 +60,7 @@ All top-level windows (EnumWindows)
   │
   ├─ IsWindowVisible? ──── NO ──→ skip
   │
-  ├─ IsIconic? ──────────── YES ─→ skip (minimized)
+  ├─ IsIconic? ─────────── YES ─→ skip (minimized)
   │
   ├─ WS_EX_TOOLWINDOW? ── YES ─→ skip (floating toolbars)
   │
@@ -70,7 +70,7 @@ All top-level windows (EnumWindows)
   │
   ├─ Empty title? ──────── YES ─→ skip (system invisible)
   │
-  ├─ Shell class? ───────── YES ─→ skip (Progman, WorkerW,
+  ├─ Shell class? ──────── YES ─→ skip (Progman, WorkerW,
   │                                  Shell_TrayWnd, etc.)
   │
   ├─ Already on target? ── YES ─→ skip (no-op)
@@ -82,15 +82,15 @@ All top-level windows (EnumWindows)
 
 The following Win32 window classes are explicitly skipped:
 
-| Class | Description |
-|-------|-------------|
-| `Progman` | Desktop / Program Manager |
-| `WorkerW` | Desktop background worker |
-| `Shell_TrayWnd` | Taskbar (primary) |
-| `Shell_SecondaryTrayWnd` | Taskbar (secondary monitors) |
-| `Windows.UI.Core.CoreWindow` | UWP core window |
-| `XamlExplorerHostIslandWindow` | XAML host island |
-| `TopLevelWindowForOverflowXamlIsland` | XAML overflow island |
+| Class                                 | Description                  |
+| ------------------------------------- | ---------------------------- |
+| `Progman`                             | Desktop / Program Manager    |
+| `WorkerW`                             | Desktop background worker    |
+| `Shell_TrayWnd`                       | Taskbar (primary)            |
+| `Shell_SecondaryTrayWnd`              | Taskbar (secondary monitors) |
+| `Windows.UI.Core.CoreWindow`          | UWP core window              |
+| `XamlExplorerHostIslandWindow`        | XAML host island             |
+| `TopLevelWindowForOverflowXamlIsland` | XAML overflow island         |
 
 ## Cascade Positioning
 
@@ -101,11 +101,11 @@ Monitor work area (excludes taskbar):
 │ │  Window 1   │                     │
 │ │  ┌─────────────┐                  │
 │ │  │  Window 2   │                  │
-│ │  │  ┌─────────────┐              │
-│ └──│  │  Window 3   │              │
-│    │  │             │              │
-│    └──│             │              │
-│       └─────────────┘              │
+│ │  │  ┌─────────────┐               │
+│ └──│  │  Window 3   │               │
+│    │  │             │               │
+│    └──│             │               │
+│       └─────────────┘               │
 │                                     │
 └─────────────────────────────────────┘
 
@@ -137,6 +137,7 @@ Wrap offset: each wrap cycle shifts start position by 15px to prevent stacking
 **Retention**: Max 10 snapshots (FIFO pruning after each save)
 
 **Undo safety**:
+
 - HWND identity is validated via title match before restoring (prevents moving wrong windows if handles are reused)
 - Snapshot is only deleted after restore attempt completes (allows retry on partial failure)
 - Both position and size are restored (important for mixed-DPI setups)
@@ -144,6 +145,7 @@ Wrap offset: each wrap cycle shifts start position by 15px to prevent stacking
 ## DPI Handling
 
 The app sets per-monitor DPI awareness v2 at startup via `SetProcessDpiAwarenessContext`. This ensures:
+
 - Window coordinates are in physical pixels, not scaled
 - Moving windows between monitors with different DPI works correctly
 - No coordinate translation needed between monitors
@@ -153,13 +155,13 @@ If the DPI awareness call fails (e.g., already set by a manifest), a warning is 
 
 ## Error Handling Strategy
 
-| Scenario | Behavior |
-|----------|----------|
-| Single monitor | Print friendly message, exit 0 |
-| No herdable windows | Print "All windows are already on Display N", exit 0 |
-| Invalid display number | Print available displays, exit 1 |
+| Scenario                | Behavior                                                        |
+| ----------------------- | --------------------------------------------------------------- |
+| Single monitor          | Print friendly message, exit 0                                  |
+| No herdable windows     | Print "All windows are already on Display N", exit 0            |
+| Invalid display number  | Print available displays, exit 1                                |
 | Can't move admin window | Warn per-window, continue with others, suggest running as admin |
-| SetWindowPos fails | Log warning, continue with remaining windows |
-| No snapshot for undo | Print "No previous herd operation to undo", exit 0 |
-| HWND reused (undo) | Skip window with warning, continue with others |
-| Window closed (undo) | Skip window with warning, continue with others |
+| SetWindowPos fails      | Log warning, continue with remaining windows                    |
+| No snapshot for undo    | Print "No previous herd operation to undo", exit 0              |
+| HWND reused (undo)      | Skip window with warning, continue with others                  |
+| Window closed (undo)    | Skip window with warning, continue with others                  |
