@@ -148,6 +148,8 @@ Herd is DPI-aware (Per-Monitor v2). It correctly handles mixed-DPI multi-monitor
 
 ## Architecture
 
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for detailed architecture documentation.
+
 ```
 src/
 ├── main.rs          # Entry point, DPI setup, CLI dispatch
@@ -170,15 +172,14 @@ See [ROADMAP.md](ROADMAP.md) for the full plan.
 
 ## Contributing
 
-Contributions welcome! Please open an issue first to discuss what you'd like to change.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for full guidelines.
 
 1. Fork the repo
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Make your changes
-4. Run tests: `cargo test`
-5. Run linter: `cargo clippy`
-6. Commit and push
-7. Open a Pull Request
+4. Run checks: `cargo test && cargo clippy && cargo fmt -- --check`
+5. Commit using [Conventional Commits](https://www.conventionalcommits.org/)
+6. Open a Pull Request
 
 ## License
 
