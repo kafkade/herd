@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <rect width="32" height="32" rx="6" fill="#1a1b2e"/>
+  <!-- Tiny sheep silhouette -->
+  <ellipse cx="16" cy="18" rx="9" ry="6" fill="#f0ebe5"/>
+  <circle cx="12" cy="14" r="4" fill="#f0ebe5"/>
+  <circle cx="17" cy="13" r="4.5" fill="#f0ebe5"/>
+  <circle cx="22" cy="14.5" r="3.5" fill="#f0ebe5"/>
+  <!-- Head -->
+  <ellipse cx="8" cy="16" rx="3.5" ry="4" fill="#3d3d3d"/>
+  <!-- Eyes -->
+  <circle cx="7.5" cy="15.5" r="1" fill="#fff"/>
+  <circle cx="7.5" cy="15.5" r="0.5" fill="#1a1b2e"/>
+  <!-- Legs -->
+  <rect x="11" y="23" width="2" height="4" rx="1" fill="#3d3d3d"/>
+  <rect x="15" y="23" width="2" height="4" rx="1" fill="#3d3d3d"/>
+  <rect x="19" y="23" width="2" height="4" rx="1" fill="#3d3d3d"/>
+  <!-- Green accent dot -->
+  <circle cx="26" cy="6" r="2.5" fill="#6ee7b7"/>
+</svg>
