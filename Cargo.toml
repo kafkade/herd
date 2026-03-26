@@ -1,0 +1,27 @@
+[package]
+name = "herd"
+version = "0.1.0"
+edition = "2024"
+description = "Move all windows to one display"
+license = "MIT"
+repository = "https://github.com/kafkade/herd"
+keywords = ["windows", "multi-monitor", "display", "utility"]
+categories = ["command-line-utilities", "os::windows-apis"]
+
+[dependencies]
+windows = { version = "0.61", features = [
+    "Win32_Foundation",
+    "Win32_Graphics_Gdi",
+    "Win32_UI_WindowsAndMessaging",
+    "Win32_Graphics_Dwm",
+    "Win32_UI_HiDpi",
+    "Win32_System_Threading",
+] }
+clap = { version = "4", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+anyhow = "1"
+log = "0.4"
+env_logger = "0.11"
+dirs = "6"
+chrono = { version = "0.4", features = ["serde"] }
