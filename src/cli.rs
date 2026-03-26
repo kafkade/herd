@@ -23,4 +23,6 @@ pub enum Commands {
     List,
     /// Restore windows to their previous positions
     Undo,
+    /// Show version with animated logo
+    Version,
 }

@@ -3,6 +3,7 @@ mod error;
 mod herd;
 mod monitor;
 mod snapshot;
+mod version;
 mod window;
 
 use anyhow::Result;
@@ -31,6 +32,7 @@ fn main() -> Result<()> {
     match cli.command {
         Some(Commands::List) => herd::list_displays()?,
         Some(Commands::Undo) => herd::undo()?,
+        Some(Commands::Version) => version::print_version(),
         None => herd::run(cli.display, cli.dry_run)?,
     }
 
