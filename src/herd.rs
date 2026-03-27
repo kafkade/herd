@@ -10,8 +10,7 @@ pub fn run(display: Option<u32>, dry_run: bool) -> Result<()> {
     let monitors = monitor::enumerate_monitors()?;
 
     if monitors.len() < 2 {
-        println!("Only one display detected. Nothing to herd.");
-        return Ok(());
+        return Err(HerdError::SingleMonitor.into());
     }
 
     let target = monitor::find_target_monitor(&monitors, display).ok_or_else(|| {
@@ -29,8 +28,7 @@ pub fn run(display: Option<u32>, dry_run: bool) -> Result<()> {
     let to_move = window::windows_not_on_monitor(&windows, target);
 
     if to_move.is_empty() {
-        println!("All windows are already on Display {}. Nothing to move.", target.index);
-        return Ok(());
+        return Err(HerdError::NoWindowsToMove.into());
     }
 
     // Save snapshot of windows we're about to move
@@ -132,8 +130,7 @@ pub fn undo() -> Result<()> {
 
     match result {
         None => {
-            println!("No previous herd operation to undo.");
-            return Ok(());
+            return Err(HerdError::NoSnapshot.into());
         }
         Some((snap, snapshot_path)) => {
             println!("🔄 Restoring {} window(s) from {}...", snap.windows.len(), snap.timestamp);
